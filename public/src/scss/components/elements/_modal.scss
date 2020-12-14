@@ -1,0 +1,90 @@
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(52, 73, 94, 0.8);
+    z-index: 50;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.7s;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 300px;
+    margin-left: -200px;
+    margin-top: -150px;
+    background: #efefef;
+    border: 1px solid #888;
+    z-index: 9999;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s ease-out;
+    transform: translateY(-45px);
+
+    @media only screen and (max-width: 576px) {
+        width: 300px;
+        margin-left: -150px;
+    }
+
+    form {
+        width: 80%;
+    }
+
+    &__close {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        width: 30px;
+        height: 30px;
+        background: #000;
+        color: #fff;
+        cursor: pointer;
+        border: none;
+        border-radius: 50%;
+        outline: none;
+        transition: background .4s ease-out;
+
+        &:hover {
+            background: $red-dark;
+        }
+    }
+
+    input {
+        width: 100%;
+        padding: 5px;
+        border: none;
+        border-radius: 4px;
+        background-color: #c0c0c0;
+    }
+
+    &__pass {
+        margin-top: 10px;
+    }
+
+    &__pass-again {
+        margin-top: 10px;
+    }
+}
+
+.state {
+    visibility: visible;
+    opacity: 1;
+}
+
+// When active class is added, that affects the modal class
+.state + .modal {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}

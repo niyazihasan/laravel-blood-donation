@@ -1,0 +1,55 @@
+.user-info {
+
+    &__step {
+        position: absolute;
+        top: -20px;
+        left: calc((100% - 112px) / 2);
+        padding: 10px 15px;
+        background-color: $red-mid;
+        border-radius: 100px;
+        color: white;
+        font-weight: bold;
+    }
+
+    &__title {
+        margin-left: 0;
+        font-style: italic;
+        text-align: center;
+    }
+
+    &__form {
+        label {
+            margin-left: 0;
+        }
+
+        .yours {
+            display: inline-block;
+            width: auto;
+        }
+    }
+
+    &__form.step-two {
+        align-items: center;
+
+        .row {
+            &:hover {
+                border: none;
+                padding: 5px;
+            }
+        }
+    }
+
+    .radios-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+
+        input {
+            display: inline-block;
+            width: auto;
+        }
+
+        p {
+            margin-right: 10px;
+        }
+    }
+}

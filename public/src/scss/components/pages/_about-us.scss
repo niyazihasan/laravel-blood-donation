@@ -1,0 +1,81 @@
+body{
+    width: 100%;
+    overflow-x: hidden;
+}
+#chart-container{
+    height: 300px;
+}
+.about-us {
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    background-color: rgba(130, 2, 3, 0.8);
+    border-radius: 50%;
+    box-shadow: 0px 0px 50px black;
+    overflow: hidden;
+
+    @supports not (shape-outside: polygon(-4px 3px, 146px 2px, 144px 25px)) {
+        width: 100%;
+        max-width: 80%;
+        padding: 10px;
+        height: auto;
+        border-radius: 5px;
+
+        @media only screen and (max-width: 1200px) {
+            max-width: 95%;
+        }
+    }
+
+    &::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    &__left {
+        shape-outside: polygon(-4px 3px, 146px 2px, 144px 25px, 144px 46px, 116px 30px, 93px 33px, 71px 44px, 53px 57px, 37px 73px, 22px 99px, 22px 127px, 19px 143px, 23px 156px, 23px 160px, 24px 175px, 30px 192px, 43px 214px, 60px 237px, 84px 260px, 120px 282px, 133px 285px, 147px 285px, 146px 300px, 125px 300px, 110px 300px, 115px 300px, 97px 300px, 0px 294px);
+        -webkit-shape-outside: polygon(-4px 3px, 146px 2px, 144px 25px, 144px 46px, 116px 30px, 93px 33px, 71px 44px, 53px 57px, 37px 73px, 22px 99px, 22px 127px, 19px 143px, 23px 156px, 23px 160px, 24px 175px, 30px 192px, 43px 214px, 60px 237px, 84px 260px, 120px 282px, 133px 285px, 147px 285px, 146px 300px, 125px 300px, 110px 300px, 115px 300px, 97px 300px, 0px 294px);
+        clip-path: polygon(-4px 3px, 146px 2px, 144px 25px, 144px 46px, 116px 30px, 93px 33px, 71px 44px, 53px 57px, 37px 73px, 22px 99px, 22px 127px, 19px 143px, 23px 156px, 23px 160px, 24px 175px, 30px 192px, 43px 214px, 60px 237px, 84px 260px, 120px 282px, 133px 285px, 147px 285px, 146px 300px, 125px 300px, 110px 300px, 115px 300px, 97px 300px, 0px 294px);
+        -webkit-clip-path: polygon(-4px 3px, 146px 2px, 144px 25px, 144px 46px, 116px 30px, 93px 33px, 71px 44px, 53px 57px, 37px 73px, 22px 99px, 22px 127px, 19px 143px, 23px 156px, 23px 160px, 24px 175px, 30px 192px, 43px 214px, 60px 237px, 84px 260px, 120px 282px, 133px 285px, 147px 285px, 146px 300px, 125px 300px, 110px 300px, 115px 300px, 97px 300px, 0px 294px);
+        float: left;
+        width: 150px;
+        height: 300px;
+
+        @supports not (shape-outside: polygon(-4px 3px, 146px 2px, 144px 25px)) {
+            float: none;
+            height: auto;
+        }
+    }
+
+    &__right {
+        shape-outside: polygon(-1px 277px, 27px 275px, 80px 247px, 111px 208px, 128px 176px, 131px 127px, 120px 91px, 114px 71px, 101px 55px, 87px 46px, 75px 36px, 53px 23px, 25px 24px, 1px 43px, 0px 0px, 150px 0px, 150px 301px, 0px 301px);
+        -webkit-shape-outside: polygon(-1px 277px, 27px 275px, 80px 247px, 111px 208px, 128px 176px, 131px 127px, 120px 91px, 114px 71px, 101px 55px, 87px 46px, 75px 36px, 53px 23px, 25px 24px, 1px 43px, 0px 0px, 150px 0px, 150px 301px, 0px 301px);
+        clip-path: polygon(-1px 277px, 27px 275px, 80px 247px, 111px 208px, 128px 176px, 131px 127px, 120px 91px, 114px 71px, 101px 55px, 87px 46px, 75px 36px, 53px 23px, 25px 24px, 1px 43px, 0px 0px, 150px 0px, 150px 301px, 0px 301px);
+        -webkit-clip-path: polygon(-1px 277px, 27px 275px, 80px 247px, 111px 208px, 128px 176px, 131px 127px, 120px 91px, 114px 71px, 101px 55px, 87px 46px, 75px 36px, 53px 23px, 25px 24px, 1px 43px, 0px 0px, 150px 0px, 150px 301px, 0px 301px);
+        float: right;
+        width: 150px;
+        height: 300px;
+
+        @supports not (shape-outside: polygon(-4px 3px, 146px 2px, 144px 25px)) {
+            float: none;
+            height: auto;
+        }
+    }
+
+    p {
+        font-weight: bold;
+        font-style: italic;
+        text-align: justify;
+        font-size: 16px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    a {
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 22px;
+        color: white;
+        text-align: center;
+    }
+}

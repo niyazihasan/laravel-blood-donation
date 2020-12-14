@@ -1,0 +1,23 @@
+//Partials
+@import "partials/variables";
+
+//Helpers
+@import "helpers/normalize";
+@import "helpers/reset";
+
+//Components
+@import "components/misc";
+
+//Elements
+@import "components/elements/modal";
+@import "components/elements/search";
+@import "components/elements/our-goal";
+@import "components/elements/message";
+@import "components/elements/burger-menu";
+
+// Pages
+@import "components/pages/header";
+@import "components/pages/profile";
+@import "components/pages/donate-blood";
+@import "components/pages/about-us";
+@import "components/pages/footer";

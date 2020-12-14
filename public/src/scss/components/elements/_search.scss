@@ -1,0 +1,66 @@
+.search-container {
+    position: relative;
+
+    .delete-result {
+        position: absolute;
+        right: 13px;
+        top: 13px;
+        cursor: pointer;
+    }
+}
+
+#search {
+    display: inline-block;
+    padding: 10px;
+}
+
+#result {
+    position: absolute;
+    width: 300px;
+    background-color: white;
+    max-height: 260px;
+    margin-top: 10px;
+    padding: 10px 0 0 10px;
+    border: 1px solid #9A9A9A;
+    border-radius: 5px;
+    overflow: auto;
+    font-style: italic;
+    z-index: 9999;
+
+    @media only screen and (max-width: 576px) {
+        width: 100%;
+    }
+
+    &:empty {
+        display: none;
+    }
+}
+
+.person {
+    display: block;
+    margin: 0 10px 0 0;
+    padding: 5px;
+    font-style: italic;
+
+    &:hover {
+        background-color: #3875d7;
+        color: white;
+    }
+}
+
+#warning {
+    font-style: italic;
+    color: $red-dark;
+
+    @media only screen and (max-width: 576px) {
+        text-align: center;
+    }
+}
+
+.hospital {
+    margin: 0;
+
+    b {
+        font-weight: bold;
+    }
+}

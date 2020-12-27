@@ -5,8 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\{ProfileForm, UserForm};
 use App\Models\{City, Donation, Hospital, User};
 
+/**
+ * Class UserController
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function index()
     {
         if (request('role')) {
@@ -28,18 +35,30 @@ class UserController extends Controller
         return view('users.index', compact('users', 'roles', 'role'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function create()
     {
         $hospitals = Hospital::pluck('name', 'id');
         return view('users.create', compact('hospitals'));
     }
 
+    /**
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function edit(User $user)
     {
         $hospitals = Hospital::pluck('name', 'id');
         return view('users.edit', compact('user', 'hospitals'));
     }
 
+    /**
+     * @param User $user
+     * @param UserForm $form
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function update(User $user, UserForm $form)
     {
         if ($form['password'] === null) {
@@ -49,6 +68,10 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Успешно редактиран потребител.');
     }
 
+    /**
+     * @param UserForm $form
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function store(UserForm $form)
     {
         $form['added_by'] = auth()->id();
@@ -56,6 +79,11 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Успешно добавен потребител.');
     }
 
+    /**
+     * @param User $user
+     * @param ProfileForm $form
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function updateProfile(User $user, ProfileForm $form)
     {
         if ($form['password'] === null) {
@@ -65,6 +93,9 @@ class UserController extends Controller
         return back()->with('success', 'Успешно редактирахте данните си.');
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function profile()
     {
         $user = auth()->user();
@@ -72,6 +103,11 @@ class UserController extends Controller
         return view('users.profile', compact('user', 'cities'));
     }
 
+    /**
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     protected function destroy(User $user)
     {
         if ($user->role === User::ROLE_PATIENT) {
@@ -83,6 +119,9 @@ class UserController extends Controller
         return redirect()->back()->with('success', $messsage);
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function results()
     {
         $donations = Donation::where('donor_id', auth()->id())

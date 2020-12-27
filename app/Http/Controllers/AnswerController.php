@@ -5,8 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\{StepOneForm, StepTwoForm};
 use App\Models\{Answer, Declaration, Donation, DonorDeclaration, Hospital};
 
+/**
+ * Class AnswerController
+ * @package App\Http\Controllers
+ */
 class AnswerController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     */
     protected function stepOne()
     {
         $user = auth()->user();
@@ -30,17 +37,28 @@ class AnswerController extends Controller
         return view('answers.step_one', compact('declaration'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     */
     protected function stepTwo()
     {
         return null !== session()->get('answers') ? view('answers.step_two') : redirect()->back()->with('success', 'Не сте минали първа стъпка.');
     }
 
+    /**
+     * @param StepOneForm $form
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function storeOne(StepOneForm $form)
     {
         session()->put('answers', $form['answer']);
         return redirect()->route('answers.step.two');
     }
 
+    /**
+     * @param StepTwoForm $form
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function storeTwo(StepTwoForm $form)
     {
         $declaration = Declaration::where('active', Declaration::ACTIVE)->first();
@@ -63,7 +81,11 @@ class AnswerController extends Controller
         return redirect()->route('results')->with('success', 'Успешно попълнихте анкетата за кръводаряване.');
     }
 
-    // Return all patients for step two
+    /**
+     * Return all patients for step two
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     protected function autoload()
     {
         $data = [];

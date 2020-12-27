@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('body')
     <div class="user-info">
-        <p class="user-info__title">ДЕКЛАРАЦИЯ ЗА КРЪВОДАРИТЕЛИ: {{$declaration->name}}</p>
+        <p class="user-info__title">{{$declaration->name}}</p>
         <div class="user-info__form">
             @foreach($declaration->questions as $question)
                 <div class="row">

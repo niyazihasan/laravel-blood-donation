@@ -5,6 +5,10 @@ namespace App\Http\Requests;
 use App\Models\Declaration;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class StepOneForm
+ * @package App\Http\Requests
+ */
 class StepOneForm extends FormRequest
 {
     private $declaration;
@@ -42,6 +46,9 @@ class StepOneForm extends FormRequest
         return $rules;
     }
 
+    /**
+     * @return array
+     */
     public function messages()
     {
         $messages = [];

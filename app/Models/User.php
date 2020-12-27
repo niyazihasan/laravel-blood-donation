@@ -7,22 +7,41 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use DateTime;
 
+/**
+ * Class User
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    /**
+     * @var string[]
+     */
     protected $hidden = ['password', 'remember_token',];
 
+    /**
+     * @var string[]
+     */
     protected $casts = ['email_verified_at' => 'datetime',];
 
+    /**
+     * @var string[]
+     */
     public $bloodTypes = [
         null => '-избери-',
         1 => 'A(+)', 2 => 'B(+)', 3 => 'AB(+)', 4 => 'O(+)',
         5 => 'A(-)', 6 => 'B(-)', 7 => 'AB(-)', 8 => 'O(-)'
     ];
 
+    /**
+     * @var array
+     */
     protected $guarded = [];
 
+    /**
+     * @var string[]
+     */
     protected $appends = ['blood_group'];
 
     const ACTIVE = 1;
@@ -35,6 +54,9 @@ class User extends Authenticatable
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_SUPERDOCTOR = 'ROLE_SUPERDOCTOR';
 
+    /**
+     * @var string[]
+     */
     public $roles = [
         self::ROLE_USER => 'Донор',
         self::ROLE_ADMIN => 'Администратор',
@@ -43,6 +65,9 @@ class User extends Authenticatable
         self::ROLE_SUPERDOCTOR => 'Доктор на кръводарителен център'
     ];
 
+    /**
+     * @return int|string
+     */
     protected function getAgeAttribute()
     {
         try {
@@ -68,16 +93,25 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * @return bool
+     */
     public function isActive()
     {
         return $this->active === self::ACTIVE;
     }
 
+    /**
+     * @param $password
+     */
     protected function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
     }
 
+    /**
+     * @return string
+     */
     protected function getGenderAttribute()
     {
         $num9 = $this->egn[8];
@@ -92,42 +126,66 @@ class User extends Authenticatable
         return $gender;
     }
 
+    /**
+     * @return mixed
+     */
     protected function getCurrentNeedBloodAttribute()
     {
         return $this->blood_quantity - $this->current_blood;
     }
 
+    /**
+     * @return string
+     */
     protected function getTypeAttribute()
     {
         return $this->roles[$this->role];
     }
 
+    /**
+     * @return string
+     */
     protected function getFullNameAttribute()
     {
         return "$this->name $this->fathersname $this->surname";
     }
 
+    /**
+     * @return string
+     */
     protected function getBloodGroupAttribute()
     {
         return $this->bloodTypes[$this->blood_type];
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     protected function donations()
     {
         return $this->hasMany(Donation::class, 'donor_id')
             ->whereIn('flag', [Donation::CHECKED, Donation::USED]);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function city()
     {
         return $this->belongsTo(City::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function hospital()
     {
         return $this->belongsTo(Hospital::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     protected function donors()
     {
         return $this->hasMany(Donation::class, 'patient_id')

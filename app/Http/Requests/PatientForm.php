@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class PatientForm
+ * @package App\Http\Requests
+ */
 class PatientForm extends FormRequest
 {
     /**
@@ -33,6 +37,9 @@ class PatientForm extends FormRequest
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function messages()
     {
         return [

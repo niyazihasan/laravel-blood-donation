@@ -5,14 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Class AuthController
+ * @package App\Http\Controllers
+ */
 class AuthController extends Controller
 {
+    /**
+     * @var \string[][]
+     */
     private $rules = [
         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         'password' => ['required', 'string', 'min:6', 'max:8', 'confirmed'],
         'password_confirmation' => ['required_with:password', 'string', 'min:6', 'max:8']
     ];
 
+    /**
+     * @var string[]
+     */
     private $messages = [
         'email' => 'Невалиден email.',
         'email.required' => 'Въведете еmail.',
@@ -23,6 +33,9 @@ class AuthController extends Controller
         'email.unique' => 'Грешен email.'
     ];
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     protected function register()
     {
         $validator = Validator::make(request()->all(), $this->rules, $this->messages);
@@ -39,20 +52,27 @@ class AuthController extends Controller
         return response()->json(['fail' => false, 'route' => route('profile')]);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     protected function login()
     {
         if (!request('password') && !request('email')) {
             return response()->json(['error' => '', 'fail' => true]);
         }
-        if (!auth()->attempt(['email' => request('email'), 'password' => request('password')])) {
-            return response()->json(['error' => 'Грешен email/парола.', 'fail' => true]);
+        $user = User::select('active')->where('email', request('email'))->first();
+        if ($user && !$user->active) {
+            return response()->json(['error' => 'Вашият акаунт е деактивиран от администратор.', 'fail' => true]);
         }
-        if (!auth()->attempt(['email' => request('email'), 'password' => request('password'), 'active' => User::ACTIVE])) {
-            return response()->json(['error' => 'Достъпът Ви е спрян временно.', 'fail' => true]);
+        if (!auth()->attempt(['email' => request('email'), 'password' => request('password')], true)) {
+            return response()->json(['error' => 'Грешен email/парола.', 'fail' => true]);
         }
         return response()->json(['fail' => false, 'route' => route('profile')]);
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function logout()
     {
         auth()->logout();

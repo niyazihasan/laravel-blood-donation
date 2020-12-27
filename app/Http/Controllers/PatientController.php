@@ -5,8 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\{Donation, Hospital, User};
 use App\Http\Requests\PatientForm;
 
+/**
+ * Class PatientController
+ * @package App\Http\Controllers
+ */
 class PatientController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function index()
     {
         $patients = User::where('role', User::ROLE_PATIENT)
@@ -18,12 +25,18 @@ class PatientController extends Controller
         return view('patients.index', compact('patients'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function indexHospital()
     {
         $hospital = auth()->user()->hospital;
         return view('patients.index_hospital', compact('hospital'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     */
     protected function create()
     {
         $user = auth()->user();
@@ -34,6 +47,10 @@ class PatientController extends Controller
         return view('patients.create', compact('hospitals'));
     }
 
+    /**
+     * @param PatientForm $form
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function store(PatientForm $form)
     {
         $form['added_by'] = auth()->id();
@@ -43,6 +60,10 @@ class PatientController extends Controller
         return redirect()->route('patients.index.hospital')->with('success', 'Успешно добавихте нуждаещ от кръв.');
     }
 
+    /**
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function edit(User $user)
     {
         $donations = Donation::where([
@@ -59,6 +80,11 @@ class PatientController extends Controller
         return view('patients.edit', compact('user', 'donations'));
     }
 
+    /**
+     * @param User $user
+     * @param PatientForm $form
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function update(User $user, PatientForm $form)
     {
         $user_ = auth()->user();

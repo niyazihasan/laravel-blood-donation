@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class StepTwoForm
+ * @package App\Http\Requests
+ */
 class StepTwoForm extends FormRequest
 {
     /**
@@ -36,6 +40,9 @@ class StepTwoForm extends FormRequest
         return $rules;
     }
 
+    /**
+     * @return string[]
+     */
     public function messages()
     {
         return [

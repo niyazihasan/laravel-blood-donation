@@ -4,41 +4,71 @@ namespace App\Http\Controllers;
 
 use App\Models\Declaration;
 
+/**
+ * Class DeclarationController
+ * @package App\Http\Controllers
+ */
 class DeclarationController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function index()
     {
         $declarations = Declaration::withCount('questions')->latest()->get();
         return view('declarations.index', compact('declarations'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function create()
     {
         return view('declarations/create');
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function store()
     {
         Declaration::create($this->validateDeclaration());
         return redirect()->route('declarations.index')->with('success', 'Успешно добавена декларация.');
     }
 
+    /**
+     * @param Declaration $declaration
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function show(Declaration $declaration)
     {
         return view('declarations.show', compact('declaration'));
     }
 
+    /**
+     * @param Declaration $declaration
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function edit(Declaration $declaration)
     {
         return view('declarations.edit', compact('declaration'));
     }
 
+    /**
+     * @param Declaration $declaration
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function update(Declaration $declaration)
     {
         $declaration->update($this->validateDeclaration());
         return redirect()->route('declarations.index')->with('success', 'Успешно редактирана декларация.');
     }
 
+    /**
+     * @param Declaration $declaration
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     protected function destroy(Declaration $declaration)
     {
         $message = 'Декларация с въпроси не може да бъде изтрита.';
@@ -49,6 +79,9 @@ class DeclarationController extends Controller
         return redirect()->back()->with('success', $message);
     }
 
+    /**
+     * @return array
+     */
     private function validateDeclaration()
     {
         return request()->validate(
@@ -57,6 +90,10 @@ class DeclarationController extends Controller
         );
     }
 
+    /**
+     * @param Declaration $declaration
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function updateActivity(Declaration $declaration)
     {
         $form = request()->all();

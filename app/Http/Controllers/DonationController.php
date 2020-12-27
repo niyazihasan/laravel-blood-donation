@@ -5,8 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\{Donation, User};
 use App\Http\Requests\ResultForm;
 
+/**
+ * Class DonationController
+ * @package App\Http\Controllers
+ */
 class DonationController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     */
     protected function indexDoctor()
     {
         $user = auth()->user();
@@ -22,11 +29,20 @@ class DonationController extends Controller
         return view('donations.index_doctor', compact('waitingDeclarations', 'declarations'));
     }
 
+    /**
+     * @param Donation $donation
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function showDoctor(Donation $donation)
     {
         return view('donations.show_doctor', compact('donation'));
     }
 
+    /**
+     * @param Donation $donation
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     protected function updateDoctor(Donation $donation)
     {
         $this->validate(request(),
@@ -42,6 +58,9 @@ class DonationController extends Controller
         return redirect()->route('declarations.index.doctor')->with('success', 'Успешно одобрихте декларация на донор.');
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     */
     protected function indexLaborant()
     {
         $user = auth()->user();
@@ -64,6 +83,11 @@ class DonationController extends Controller
         return view('donations.index_laborant', compact('waitingDonations', 'donations'));
     }
 
+    /**
+     * @param Donation $donation
+     * @param ResultForm $form
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function updateLaborant(Donation $donation, ResultForm $form)
     {
         $donation->update([
@@ -77,6 +101,9 @@ class DonationController extends Controller
         return redirect()->back()->with('success', 'Успешно добавихте резултати.');
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     protected function quantityBlood()
     {
         $availableBlood = User::select('blood_type')
@@ -142,6 +169,11 @@ class DonationController extends Controller
         return view('donations.quantity_blood', compact('data'));
     }
 
+    /**
+     * @param Donation $donation
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     protected function destroy(Donation $donation)
     {
         $donation->donorDeclaration->answers()->delete();

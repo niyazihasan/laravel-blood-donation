@@ -57,15 +57,12 @@ class AuthController extends Controller
      */
     protected function login()
     {
-        if (!request('password') && !request('email')) {
-            return response()->json(['error' => '', 'fail' => true]);
+        if (!auth()->attempt(request(['password', 'email']), true)) {
+            return response()->json(['fail' => true, 'error' => 'Грешен email/парола.']);
         }
-        $user = User::select('active')->where('email', request('email'))->first();
-        if ($user && !$user->active) {
-            return response()->json(['error' => 'Вашият акаунт е деактивиран от администратор.', 'fail' => true]);
-        }
-        if (!auth()->attempt(['email' => request('email'), 'password' => request('password')], true)) {
-            return response()->json(['error' => 'Грешен email/парола.', 'fail' => true]);
+        if (!auth()->user()->active) {
+            auth()->logout();
+            return response()->json(['fail' => true, 'error' => 'Вашият акаунт е деактивиран от администратор.']);
         }
         return response()->json(['fail' => false, 'route' => route('profile')]);
     }
